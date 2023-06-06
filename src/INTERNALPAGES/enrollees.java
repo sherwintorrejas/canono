@@ -83,6 +83,9 @@ public class enrollees extends javax.swing.JInternalFrame {
                     + "LEFT JOIN table_department "
                     + "ON table_enrolle.dept_id = table_department.dept_id");
             enrolltable.setModel(DbUtils.resultSetToTableModel(rs));
+          DefaultTableModel model = (DefaultTableModel) enrolltable.getModel();
+    String[] columnIdentifiers = {"ID", "Name", "ADDRESS", "Course"};
+    model.setColumnIdentifiers(columnIdentifiers);
             rs.close();
        
         }catch(SQLException ex){
@@ -178,7 +181,7 @@ public class enrollees extends javax.swing.JInternalFrame {
 
         add.setBackground(new java.awt.Color(0, 153, 255));
         add.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        add.setText("ADD");
+        add.setText("ENROLL");
         add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMouseClicked(evt);

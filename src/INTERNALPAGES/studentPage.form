@@ -96,7 +96,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="50" width="510" height="240"/>
+              <AbsoluteConstraints x="10" y="80" width="510" height="210"/>
             </Constraint>
           </Constraints>
 
@@ -158,31 +158,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableMouseClicked"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="delete">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="DELETE"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="190" y="300" width="80" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JButton" name="ref">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -198,7 +176,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="280" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="270" y="300" width="80" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -210,35 +188,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ADD"/>
+            <Property name="text" type="java.lang.String" value="ADD / UPDATE"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="300" width="80" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JButton" name="edit">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="EDIT"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="editMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="100" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="90" y="300" width="160" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -257,7 +214,51 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="420" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="370" y="300" width="80" height="30"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="GENDER">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="ALL"/>
+                <StringItem index="1" value="MALE"/>
+                <StringItem index="2" value="FEMALE"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="GENDERItemStateChanged"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="270" y="50" width="150" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="STATUS">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="ALL"/>
+                <StringItem index="1" value="SINGLE"/>
+                <StringItem index="2" value="MARRIED"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="STATUSItemStateChanged"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="70" y="50" width="150" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

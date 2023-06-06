@@ -96,7 +96,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="50" width="510" height="240"/>
+              <AbsoluteConstraints x="10" y="60" width="510" height="230"/>
             </Constraint>
           </Constraints>
 
@@ -161,25 +161,6 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="delete">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="DELETE"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="190" y="300" width="80" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JButton" name="ref">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -195,7 +176,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="280" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="270" y="300" width="80" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -207,7 +188,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="12" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="ADD"/>
+            <Property name="text" type="java.lang.String" value="ADD/UPDATE"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="addMouseClicked"/>
@@ -215,27 +196,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="300" width="80" height="30"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JButton" name="edit">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="99" red="0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="EDIT"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="editMouseClicked"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="100" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="80" y="300" width="160" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -254,7 +215,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="420" y="300" width="80" height="30"/>
+              <AbsoluteConstraints x="410" y="300" width="80" height="30"/>
             </Constraint>
           </Constraints>
         </Component>

@@ -22,7 +22,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
 
@@ -31,16 +33,13 @@ import net.proteanit.sql.DbUtils;
  * @author canono
  */
 public class studentPage extends javax.swing.JInternalFrame {
-
+DefaultTableModel model;
     /**
      * Creates new form USERPAGE
      */
     public studentPage() {
-        initComponents();
-        
-       displayData();
- 
-        
+        initComponents();  
+       displayData();   
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
         BasicInternalFrameUI bi = (BasicInternalFrameUI)this.getUI();
         bi.setNorthPane(null);
@@ -61,12 +60,7 @@ public class studentPage extends javax.swing.JInternalFrame {
         table.setFont(new Font("Century Gothic", Font.ITALIC, 10)); 
         
     }
-   
-    
-    
-    
-    
-    
+
     public void displayData(){
        
         try{
@@ -74,6 +68,9 @@ public class studentPage extends javax.swing.JInternalFrame {
             Dbconfiguration dbc = new Dbconfiguration();
             ResultSet rs = dbc.getData("SELECT * FROM tbl_student");
             table.setModel(DbUtils.resultSetToTableModel(rs));
+             DefaultTableModel model = (DefaultTableModel) table.getModel();
+    String[] columnIdentifiers = {"ID", "NAME", "ADDRESS","STATUS", "GENDER", "CONTACT","MOTHER", "FATHER", "VIOLATION","IMAGE"};
+    model.setColumnIdentifiers(columnIdentifiers);
             rs.close();
        
         }catch(SQLException ex){
@@ -81,8 +78,7 @@ public class studentPage extends javax.swing.JInternalFrame {
        
         }
     }
-    
-    
+
      public void fillTable()throws SQLException{
          
        try{  
@@ -93,6 +89,33 @@ public class studentPage extends javax.swing.JInternalFrame {
      }catch(SQLException ex){
 }
      }
+     
+                  
+       public void filter(String STAT ){
+             model = (DefaultTableModel) table.getModel();
+         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+         table.setRowSorter(trs);
+       
+         if(STAT =="ALL"){
+        table.setRowSorter(trs);
+         }else{
+         trs.setRowFilter(RowFilter.regexFilter(STAT));
+         }
+       
+       }
+     
+     public void filter1(String GEN ){
+             model = (DefaultTableModel) table.getModel();
+         TableRowSorter<DefaultTableModel> trs = new TableRowSorter<>(model);
+         table.setRowSorter(trs);
+       
+         if(GEN =="ALL"){
+        table.setRowSorter(trs);
+         }else{
+         trs.setRowFilter(RowFilter.regexFilter(GEN));
+         }
+       
+       }
         Color navcolor = new Color(0,153,255);
         Color headcolor = new Color(0,204,204);
         Color bodycolor = new Color(204,255,255);
@@ -107,11 +130,11 @@ public class studentPage extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        delete = new javax.swing.JButton();
         ref = new javax.swing.JButton();
         add = new javax.swing.JButton();
-        edit = new javax.swing.JButton();
         print = new javax.swing.JButton();
+        GENDER = new javax.swing.JComboBox<>();
+        STATUS = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(0, 204, 204));
@@ -133,24 +156,9 @@ public class studentPage extends javax.swing.JInternalFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 531, 40));
 
         table.setBackground(new java.awt.Color(0, 153, 255));
-        table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tableMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(table);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 510, 240));
-
-        delete.setBackground(new java.awt.Color(0, 153, 255));
-        delete.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        delete.setText("DELETE");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 80, 30));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 510, 210));
 
         ref.setBackground(new java.awt.Color(0, 153, 255));
         ref.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -160,37 +168,17 @@ public class studentPage extends javax.swing.JInternalFrame {
                 refActionPerformed(evt);
             }
         });
-        jPanel1.add(ref, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 80, 30));
+        jPanel1.add(ref, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 300, 80, 30));
 
         add.setBackground(new java.awt.Color(0, 153, 255));
         add.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        add.setText("ADD");
-        add.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addMouseClicked(evt);
-            }
-        });
+        add.setText("ADD / UPDATE");
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addActionPerformed(evt);
             }
         });
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 80, 30));
-
-        edit.setBackground(new java.awt.Color(0, 153, 255));
-        edit.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        edit.setText("EDIT");
-        edit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editMouseClicked(evt);
-            }
-        });
-        edit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editActionPerformed(evt);
-            }
-        });
-        jPanel1.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 80, 30));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 160, 30));
 
         print.setBackground(new java.awt.Color(0, 153, 255));
         print.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
@@ -200,7 +188,23 @@ public class studentPage extends javax.swing.JInternalFrame {
                 printActionPerformed(evt);
             }
         });
-        jPanel1.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 80, 30));
+        jPanel1.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 80, 30));
+
+        GENDER.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL", "MALE", "FEMALE" }));
+        GENDER.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                GENDERItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(GENDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 150, -1));
+
+        STATUS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL", "SINGLE", "MARRIED" }));
+        STATUS.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                STATUSItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(STATUS, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 150, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconsfolder/clear-sky-sunset-dusk-blue-sky-starry-sky-horizon-beach-1600x900-4044 (2).jpg"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 540, 320));
@@ -221,25 +225,6 @@ public class studentPage extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-        int rowIndex = table.getSelectedRow();
-       if(rowIndex < 0){
-           JOptionPane.showMessageDialog(null, "Please select a data first");
-       }else{
-            TableModel model = table.getModel();
-            Object value = model.getValueAt(rowIndex, 0);
-            String id = value.toString();
-             int a=JOptionPane.showConfirmDialog(null,"Are you sure?");  
-                    if(a==JOptionPane.YES_OPTION){  
-                            Dbconfiguration dbc = new Dbconfiguration();
-                            int st_id =Integer.parseInt(id);
-                            dbc.deleteData(st_id,"tbl_student", "st_id");
-                            displayData();
-                           
-                    }    
-       }
-    }//GEN-LAST:event_deleteActionPerformed
-
     private void refActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refActionPerformed
         
         
@@ -250,82 +235,12 @@ public class studentPage extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_refActionPerformed
 
-    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-       
-    }//GEN-LAST:event_tableMouseClicked
-
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
          JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
        mainFrame.dispose();
        studentform stf = new studentform();
        stf.setVisible(true);
-       stf.action = "Add";
-       stf.label.setText("SAVE");
     }//GEN-LAST:event_addActionPerformed
-
-    private void editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editActionPerformed
-         int rowIndex = table.getSelectedRow();
-        if(rowIndex < 0){
-            JOptionPane.showMessageDialog(null, "Please Select an Item!");
-        }else{
-            TableModel model = table.getModel();
-            
-            studentform stf = new studentform();
-            stf.st_id.setText(""+model.getValueAt(rowIndex, 0));
-            String sid = model.getValueAt(rowIndex, 0).toString();
-            try{
-            Dbconfiguration dbc = new  Dbconfiguration();
-            ResultSet rs = dbc.getData("SELECT * FROM tbl_student WHERE st_id = '"+sid+"' ");
-            if(rs.next()){
-            stf.st_name.setText(rs.getString("st_name"));
-            stf.st_address.setText(rs.getString("st_address"));
-             stf.st_status.setSelectedItem(rs.getString("st_status"));
-            stf.gender = rs.getString("st_gender");
-             String gend = rs.getString("st_gender");
-            
-            if(gend.equals("Male")){
-                stf.male.setSelected(true); 
-            }
-            
-            if(gend.equals("Female")){
-                stf.female.setSelected(true);
-            }
-             stf.contact.setText(rs.getString("contact"));
-                 stf.mname.setText(rs.getString("mname"));
-                 stf.fname.setText(rs.getString("fname"));
-                 stf.violation.setSelectedItem(rs.getString("violation"));
-                 
-                 
-                 
-  
-            stf.imageBytes = rs.getBytes("image");
-            
-            stf.person_image = rs.getBytes("image");
-            stf.image_display.setIcon(stf.ResizeImage(null, rs.getBytes("image")));
-               
-            stf.setVisible(true);
-            stf.action = "Update";
-            stf.label.setText("UPDATE");
-            JFrame mainFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            mainFrame.dispose();
-            }else{
-                System.out.println("No Data Found");
-            }
-            }catch(SQLException w){
-                System.out.println(""+w);
-            }
-        }
-    }//GEN-LAST:event_editActionPerformed
-
-    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-       
-      
-        
-    }//GEN-LAST:event_addMouseClicked
-
-    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-            
-    }//GEN-LAST:event_editMouseClicked
 
     private void printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printActionPerformed
         MessageFormat header = new MessageFormat("students");
@@ -342,11 +257,23 @@ public class studentPage extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_printActionPerformed
 
+    private void STATUSItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_STATUSItemStateChanged
+         String STAT = STATUS.getSelectedItem().toString();
+     
+        filter(STAT); 
+    }//GEN-LAST:event_STATUSItemStateChanged
+
+    private void GENDERItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_GENDERItemStateChanged
+       String GEN = GENDER.getSelectedItem().toString();
+     
+        filter(GEN); 
+    }//GEN-LAST:event_GENDERItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> GENDER;
+    private javax.swing.JComboBox<String> STATUS;
     private javax.swing.JButton add;
-    private javax.swing.JButton delete;
-    private javax.swing.JButton edit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

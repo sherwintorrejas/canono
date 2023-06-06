@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 05, 2023 at 03:54 PM
+-- Generation Time: Jun 06, 2023 at 11:37 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -39,7 +39,8 @@ CREATE TABLE `table_department` (
 
 INSERT INTO `table_department` (`dept_id`, `dept_code`, `dept_desc`) VALUES
 (1, 'BSIT', 'Bachelor of Science Information Technology'),
-(3, 'BSBA', 'Bachelor of Science in Business Administration');
+(3, 'BSBA', 'Bachelor of Science in Business Administration'),
+(4, 'BSHM', 'BACHELOR OF SCIENCE IN HOTEL MANAGEMENT');
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,9 @@ CREATE TABLE `table_enrolle` (
 --
 
 INSERT INTO `table_enrolle` (`en_id`, `st_id`, `dept_id`, `e_date`, `en_status`) VALUES
-(7, 10, 3, 'qweqwe', 'qweqwe');
+(7, 10, 3, 'qweqwe', 'qweqwe'),
+(8, 15, 4, 'DAWD', 'DWADWAD'),
+(9, 16, 3, '2023-06-06', 'ENROLLED');
 
 -- --------------------------------------------------------
 
@@ -104,7 +107,7 @@ CREATE TABLE `tbl_student` (
   `mname` varchar(50) NOT NULL,
   `fname` varchar(50) NOT NULL,
   `violation` varchar(100) NOT NULL,
-  `image` varchar(500) NOT NULL
+  `image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -112,10 +115,13 @@ CREATE TABLE `tbl_student` (
 --
 
 INSERT INTO `tbl_student` (`st_id`, `st_name`, `st_address`, `st_status`, `st_gender`, `contact`, `mname`, `fname`, `violation`, `image`) VALUES
-(10, 'Christian O. Canono', 'Langtad, City of Naga, Cebu', 'Single', 'Male', '09208044382', 'lorena', 'cristino', 'Threatening the safety of another student', '????\0JFIF\0\0\0\0\0\0???ICC_PROFILE\0\0\0?lcms\0\0mntrRGB XYZ ?\0\0\0	\0\0acspMSFT\0\0\0\0sawsctrl\0\0\0\0\0\0\0\0\0\0\0\0\0\0??\0\0\0\0\0?-hand??\0=@??=@t,???\"?\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0	desc\0\0\0?\0\0\0_cprt\0\0\0\0\0wtpt\0\0\0\0\0rXYZ\0\0,\0\0\0gXYZ\0\0@\0\0\0bXYZ\0\0T\0\0\0rTRC\0\0h\0\0\0`gTRC\0\0h\0\0\0`bTRC\0\0h\0\0\0`desc\0\0\0\0\0\0\0uRGB\0\0\0\0\0\0\0\0\0\0\0\0text\0\0\0\0CC0\0XYZ \0\0\0\0\0\0?T\0\0\0\0?XYZ \0\0\0\0\0\0o?\0\08?\0\0?XYZ \0\0\0\0\0\0b?\0\0??\0\0?XYZ \0\0\0\0\0\0$?\0\0?\0\0??curv\0\0\0\0\0\0\0*\0\0\0|\0??u??N\nb???j. C$?)j.~3?9???FWM6Tv\\dl?uV~??,?6?????۾????e?w??????\0C\0\n'),
-(15, 'fgfg', 'fgfg', 'Single', 'Female', 'fgfgf', 'fgf', 'fgf', 'Cheating or plagiarizing', 'src/images/5 years LTO.jpg'),
-(16, 'hjhj', 'hjhj', 'Single', 'Female', 'hjhj', 'hjh', 'jhjhj', 'Cheating or plagiarizing', 'src/images/5 years LTO.jpg'),
-(18, 'fgfg', 'fgfg', 'Single', 'Male', 'fgf', 'fgf', 'fgfg', 'Cheating or plagiarizing', 'src/images/pagkakaroon ng feeding programs.jpg');
+(10, 'Christian O. Canono', 'Langtad, City of Naga, Cebu', 'Single', 'Male', '09208044382', 'lorena', 'cristino', 'Threatening the safety of another student', ''),
+(15, 'fgfg', 'fgfg', 'MARRIED', 'FEMALE', 'fgfgf', 'fgf', 'fgf', 'Cheating or plagiarizing', 'src/images/3.jpg'),
+(16, 'hjhj', 'hjhj', 'Single', 'Female', 'hjhj', 'hjh', 'jhjhj', 'Cheating or plagiarizing', ''),
+(19, 'test', 'test	', 'MARRIED', 'MALE', '2132132', 'test', 'test', 'Threatening the safety of another student', ''),
+(21, 'tets', 'test', 'SINGLE', 'MALE', 'testsd', 'testdwa', 'tsetdwa', 'Cheating or plagiarizing', ''),
+(22, 'tets', '', 'SINGLE', 'FEMALE', 'tset', 'test', 'tet', 'Theft (from another student or from the school)', ''),
+(23, 'test', 'test	', 'MARRIED', 'FEMALE', 'test', 'tedst', 'test', 'Cheating or plagiarizing', 'src/images/1.jpg');
 
 -- --------------------------------------------------------
 
@@ -185,13 +191,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `table_department`
 --
 ALTER TABLE `table_department`
-  MODIFY `dept_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `dept_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `table_enrolle`
 --
 ALTER TABLE `table_enrolle`
-  MODIFY `en_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `en_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `table_user`
@@ -203,7 +209,7 @@ ALTER TABLE `table_user`
 -- AUTO_INCREMENT for table `tbl_student`
 --
 ALTER TABLE `tbl_student`
-  MODIFY `st_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `st_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`

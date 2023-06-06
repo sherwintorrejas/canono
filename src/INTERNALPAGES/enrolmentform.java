@@ -13,17 +13,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
@@ -46,17 +50,27 @@ private Connection con;
     
     public enrolmentform() {
         initComponents();
+        gslp();
+        Calendar currentDate = Calendar.getInstance();
+        currentDate.set(Calendar.HOUR_OF_DAY, 0);
+        currentDate.set(Calendar.MINUTE, 0);
+        currentDate.set(Calendar.SECOND, 0);
+        currentDate.set(Calendar.MILLISECOND, 0);
+     ENROLLEDDATE.addPropertyChangeListener("date", new PropertyChangeListener() {
+           
+            public void propertyChange(PropertyChangeEvent evt) {
+                Calendar selectedDate = Calendar.getInstance();
+                selectedDate.setTime((Date) evt.getNewValue());
+                if (selectedDate.before(currentDate)) {
+                    ENROLLEDDATE.setDate(currentDate.getTime());
+                   
+                }
+            }
+     
+     });
+     
        
     }
-   
-   
-     public byte[] imageBytes;
-    String path;
-    String filename=null;
-    String imgPath = null;
-    public byte[] person_image = null;
-    
-    
         public void close(){
             this.dispose();
         dashboards ds = new dashboards();
@@ -66,7 +80,80 @@ private Connection con;
         ds.maindesktop.add(up).setVisible(true);
         }
     
+private void getstudent(){
+ int studeid= Integer.parseInt(st_id.getText());
+ try{
+  con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scc_db", "root", "");
+  PreparedStatement pst = con.prepareStatement("SELECT * FROM tbl_student where st_id  =?");
+  pst.setInt(1, studeid);
+  ResultSet rs = pst.executeQuery();
+  
+  if(rs.next()){
+  SNAME.setText(rs.getString("st_name"));
+  ADD.setText(rs.getString("st_address"));
+  GEN.setText(rs.getString("st_gender"));
 
+   error.setText("");
+  }else{
+  error.setText("INVALID STUDENT ID");
+  }
+ }catch (SQLException ex){
+ ex.printStackTrace();
+ }
+}
+ private void getDEPd(){
+ int depid= Integer.parseInt(dept_id.getText());
+ try{
+  con = DriverManager.getConnection("jdbc:mysql://localhost:3306/scc_db", "root", "");
+  PreparedStatement pst = con.prepareStatement("SELECT * FROM table_department where dept_id  =?");
+  pst.setInt(1, depid);
+  ResultSet rs = pst.executeQuery();
+  
+  if(rs.next()){
+  DEPNAME.setText(rs.getString("dept_code"));
+  error1.setText("");
+  }else{
+  error1.setText("INVALID DEPARTMENT ID");
+          }
+ }catch (SQLException ex){
+ ex.printStackTrace();
+ }
+ }
+
+ public void gslp(){
+
+ enslip.setText("*****************************************************\n");
+ enslip.setText(enslip.getText()+"-------------------ENROLLMENT SLIP--------------------\n");
+ enslip.setText(enslip.getText()+"*****************************************************\n");
+
+
+ enslip.setText(enslip.getText()+"\nENROLLED DATE: "+  ENROLLEDDATE.getDate()+"\n");
+ enslip.setText(enslip.getText()+"\nDEPARTMENT ID: "+dept_id.getText()+"\n");
+ enslip.setText(enslip.getText()+"\nDEPARTMENT NAME: "+ DEPNAME.getText()+"\n");
+ enslip.setText(enslip.getText()+"\nSTUDENT ID: "+ st_id.getText()+"\n");
+ enslip.setText(enslip.getText()+"\nSTUDENT NAME: "+  SNAME.getText()+"\n");
+ enslip.setText(enslip.getText()+"\nADDRESS: "+  ADD.getText()+"\n");
+  enslip.setText(enslip.getText()+"\nGENDER: "+  GEN.getText()+"\n");
+
+ enslip.setText(enslip.getText()+"\nSIGNATURE:\n\n");
+ enslip.setText(enslip.getText()+"\n____________\t\t_____________\n");
+ enslip.setText(enslip.getText()+"ADMIN\t\tENROLLEE\n");
+ 
+ 
+ 
+ 
+ }
+    //print
+ public void print(){
+ 
+     try {
+         enslip.print();
+     } catch (Exception e) {
+     JOptionPane.showMessageDialog(null, "print failed"+e);
+     }
+ }
+ 
+ 
     Color navcolor = new Color(0,153,255);
         Color headcolor = new Color(0,204,204);
         Color bodycolor = new Color(204,255,255);
@@ -88,7 +175,6 @@ private Connection con;
         jLabel2 = new javax.swing.JLabel();
         ADD = new javax.swing.JTextField();
         clear = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
         DEPNAME = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -98,14 +184,14 @@ private Connection con;
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        enslip = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         dept_id = new javax.swing.JTextField();
         st_id = new javax.swing.JTextField();
-        endate = new javax.swing.JTextField();
-        STATUS = new javax.swing.JTextField();
+        ENROLLEDDATE = new com.toedter.calendar.JDateChooser();
+        error = new javax.swing.JLabel();
+        error1 = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -167,7 +253,7 @@ private Connection con;
             .addComponent(label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
         );
 
-        jPanel1.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 110, 30));
+        jPanel1.add(st_label, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 110, 30));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -179,6 +265,11 @@ private Connection con;
         ADD.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ADD.setEnabled(false);
         ADD.setOpaque(false);
+        ADD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ADDActionPerformed(evt);
+            }
+        });
         jPanel1.add(ADD, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 150, 20));
 
         clear.setBackground(new java.awt.Color(204, 255, 255));
@@ -189,12 +280,7 @@ private Connection con;
                 clearActionPerformed(evt);
             }
         });
-        jPanel1.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 110, 30));
-
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel7.setText("STATUS:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 120, -1));
+        jPanel1.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 400, 110, 30));
 
         DEPNAME.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         DEPNAME.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -242,24 +328,20 @@ private Connection con;
         jLabel5.setText("STUDENT NAME:");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 100, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        enslip.setColumns(20);
+        enslip.setRows(5);
+        jScrollPane1.setViewportView(enslip);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 360, 310));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jButton1.setText("PRINT");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 120, 40));
-
-        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        jButton2.setText("GENERATE SLIP");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 400, 160, 40));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, 120, 40));
 
         jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -269,22 +351,29 @@ private Connection con;
         dept_id.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         dept_id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         dept_id.setOpaque(false);
+        dept_id.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dept_idFocusLost(evt);
+            }
+        });
         jPanel1.add(dept_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 150, 20));
 
         st_id.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
         st_id.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         st_id.setOpaque(false);
+        st_id.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                st_idFocusLost(evt);
+            }
+        });
         jPanel1.add(st_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 150, 20));
+        jPanel1.add(ENROLLEDDATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 150, -1));
 
-        endate.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        endate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        endate.setOpaque(false);
-        jPanel1.add(endate, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 290, 150, 20));
+        error.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(error, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 280, 30));
 
-        STATUS.setFont(new java.awt.Font("Century Gothic", 1, 11)); // NOI18N
-        STATUS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        STATUS.setOpaque(false);
-        jPanel1.add(STATUS, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 150, 20));
+        error1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(error1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 280, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -302,34 +391,10 @@ private Connection con;
     }// </editor-fold>//GEN-END:initComponents
 
     private void st_labelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_st_labelMouseClicked
-     
-        
-   /*     String user1=st_name.getText();
-      
-      try {
-      
-      File file=new File (filename);
-      FileInputStream fis;
-      byte[] image =new byte[ (int)file.length()];
-      fis = new FileInputStream(file);
-      fis.read(image);
-      String sql = "UPDATE  tbl_student SET image = ? Where st_name = '"+user1+"'";
-      pstmt=con.prepareStatement(sql);
-      pstmt.setBytes(1,image);
-      pstmt.executeUpdate();
-      pstmt.close();
-      JOptionPane.showMessageDialog(this, "SUCCESSFULLY UPDATED!");
- } catch (FileNotFoundException ex) {
-Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
- } catch (IOException ex){
- Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
- } catch (SQLException ex){
- Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
- }
-        */
-        
-        
-        
+  java.util.Date enroldate= ENROLLEDDATE.getDate();
+    Long l1= enroldate.getTime();  
+      java.sql.Date edate = new java.sql.Date(l1);
+    
         if(action.equals("Add")){
            try{
             Dbconfiguration dbc = new Dbconfiguration();
@@ -339,34 +404,16 @@ Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
 
             pst.setString(1, st_id.getText());
              pst.setString(2, dept_id.getText());
-            pst.setString(3, endate.getText());
-            pst.setString(4, STATUS.getText());
+            pst.setDate(3, edate);
+            pst.setString(4, "ENROLLED");
 
             pst.execute();
             JOptionPane.showMessageDialog(null, "Successfully Updated!");
-             close();
+         gslp();
         }catch(Exception ex){
             System.out.println(ex);
         }
           
- }else if (action.equals("Update")){
-       try{
-            Dbconfiguration dbc = new Dbconfiguration();
-            Connection con = dbc.connect_db();
-           String sql = "UPDATE table_enrolle SET st_id=?, dept_id=?,st_status=?,  endate=?, en_status=? where en_id=?";
-            PreparedStatement pst = con.prepareStatement(sql);
-
-           pst.setString(1, st_id.getText());
-             pst.setString(2, dept_id.getText());
-            pst.setString(3, endate.getText());
-            pst.setString(4, STATUS.getText());
-
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Successfully Updated!");
-             close();
-        }catch(Exception ex){
-            System.out.println(ex);
-        }
  }
     }//GEN-LAST:event_st_labelMouseClicked
 
@@ -392,12 +439,28 @@ Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
         GEN.setText("");
         dept_id.setText("");
         DEPNAME.setText("");
-         endate.setText("");
+         ENROLLEDDATE.setDate(null);
     }//GEN-LAST:event_clearActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ADDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ADDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ADDActionPerformed
+
+    private void st_idFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_st_idFocusLost
+       if(!st_id.getText().equals("")){
+       getstudent();
+       }
+    }//GEN-LAST:event_st_idFocusLost
+
+    private void dept_idFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dept_idFocusLost
+        if(!dept_id.getText().equals("")){
+       getDEPd();
+       }
+    }//GEN-LAST:event_dept_idFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+print();      
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,15 +501,16 @@ Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField ADD;
     public javax.swing.JTextField DEPNAME;
+    private com.toedter.calendar.JDateChooser ENROLLEDDATE;
     public javax.swing.JTextField GEN;
     public javax.swing.JTextField SNAME;
-    private javax.swing.JTextField STATUS;
     private javax.swing.JButton clear;
     private javax.swing.JTextField dept_id;
-    private javax.swing.JTextField endate;
+    private javax.swing.JTextArea enslip;
+    private javax.swing.JLabel error;
+    private javax.swing.JLabel error1;
     private javax.swing.JLabel exit;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -454,13 +518,11 @@ Logger.getLogger(studentform.class.getName()).log(Level.SEVERE, null, ex);
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     public javax.swing.JLabel label;
     private javax.swing.JTextField st_id;
     public javax.swing.JPanel st_label;
